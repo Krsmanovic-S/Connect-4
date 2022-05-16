@@ -8,11 +8,11 @@ class Game:
         self.window = pygame.display.set_mode((WIDTH, HEIGHT))
         self.board = Board()
         self.computer = AI()
-        self.mouse_pos = 0
+        self.mouse_pos = (-1, -1)
 
     def update_events(self):
         self.mouse_pos = pygame.mouse.get_pos()
-        # EVENTS
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -21,7 +21,8 @@ class Game:
                 if event.button == 1:
                     if self.board.game_over:
                         self.board.reset()
-                    if self.board.player_turn and not self.board.game_over:
+
+                    if self.board.player_turn:
                         self.board.play_move(self.mouse_pos)
 
     def update(self):
@@ -34,7 +35,7 @@ class Game:
     def render(self):
         pygame.display.set_caption("Connect 4")
 
-        self.board.draw_grid(self.window)
+        self.board.draw_grid(self.window, self.mouse_pos[0])
 
         pygame.display.update()
 

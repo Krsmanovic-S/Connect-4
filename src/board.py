@@ -18,11 +18,15 @@ class Board:
         surface.fill(outline_color, rect)
         surface.fill(fill_color, rect.inflate(-border * 2, -border * 2))
 
-    def draw_grid(self, window):
+    def draw_grid(self, window, mouse_x):
         for i in range(6):
             for j in range(7):
                 cell = pygame.Rect(j * 100, i * 100, 100, 100)
-                self.draw_rect(window, GRAY, BLACK, cell)
+
+                if mouse_x // 100 == j:
+                    self.draw_rect(window, HIGHLIGHTED, BLACK, cell)
+                else:
+                    self.draw_rect(window, GRAY, BLACK, cell)
 
                 if self.field[i][j] == 0:
                     pygame.draw.circle(window, WHITE, (j * 100 + 50, i * 100 + 50), 45, 0)
