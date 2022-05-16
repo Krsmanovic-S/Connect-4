@@ -1,2 +1,2 @@
 # Connect 4
- Connect 4 Game implemented in Python using Pygame
+ Connect 4 implemented in Python using Pygame
