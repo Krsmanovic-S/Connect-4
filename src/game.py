@@ -16,16 +16,20 @@ class Game:
         self.mouse_pos = (-1, -1)
         self.board = Board()
         self.computer = AI()
+        self.is_player_red = True
 
         # Buttons
         self.play_button = Button(WIDTH // 2 - 200, 150, PLAY_BUTTON, HOVERED_PLAY)
         self.options_button = Button(WIDTH // 2 - 200, 350, OPTIONS_BUTTON, HOVERED_OPTIONS)
         self.exit_button = Button(WIDTH // 2 - 200, 550, EXIT_BUTTON, HOVERED_EXIT)
 
+        self.player_color_red = Button(15, 50, PLAYER_COLOR_RED, HOVERED_COLOR_RED)
+        self.player_color_yellow = Button(15, 50, PLAYER_COLOR_YELLOW, HOVERED_COLOR_YELLOW)
+
+
         # Placeholders (Options Menu)
-        self.holder_1 = Button(15, 50, PLAY_BUTTON, HOVERED_PLAY)
-        self.holder_2 = Button(15, 275, PLAY_BUTTON, HOVERED_PLAY)
-        self.holder_3 = Button(15, 500, PLAY_BUTTON, HOVERED_PLAY)
+        self.holder_2 = Button(15, 275, PLAYER_COLOR_RED, HOVERED_COLOR_RED)
+        self.holder_3 = Button(15, 500, PLAYER_COLOR_RED, HOVERED_COLOR_RED)
         self.back_button = Button(425, 500, BACK_BUTTON, HOVERED_BACK)
 
         # Menu control
@@ -49,6 +53,12 @@ class Game:
                     if event.button == 1:
                         # Transition into the game screen if the player clicks play.
                         if self.play_button.rect.collidepoint(self.mouse_pos):
+                            if self.is_player_red:
+                                self.board.player_turn = True
+                                self.board.player_color = 'Red'
+                            else:
+                                self.board.player_turn = False
+                                self.board.player_color = 'Yellow'
                             self.in_menu = False
                             self.in_options = False
                             return
@@ -90,8 +100,15 @@ class Game:
                             self.in_menu = True
                             self.in_options = False
                             return
+                        if self.player_color_red.rect.collidepoint(self.mouse_pos):
+                            self.is_player_red = not self.is_player_red
+                            break
 
-            self.holder_1.draw(self.window, self.mouse_pos)
+            if self.is_player_red:
+                self.player_color_red.draw(self.window, self.mouse_pos)
+            else:
+                self.player_color_yellow.draw(self.window, self.mouse_pos)
+
             self.holder_2.draw(self.window, self.mouse_pos)
             self.holder_3.draw(self.window, self.mouse_pos)
             self.back_button.draw(self.window, self.mouse_pos)

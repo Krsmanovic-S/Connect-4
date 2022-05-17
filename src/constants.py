@@ -5,18 +5,25 @@ WIDTH = 840
 HEIGHT = 720
 
 # IMAGES
-WINDOW_ICON = pygame.image.load('images/window_logo.png')
-BG_IMAGE = pygame.image.load('images/logo.png')
+WINDOW_ICON = pygame.image.load('images/icons/window_logo.png')
+BG_IMAGE = pygame.image.load('images/icons/logo.png')
 
-PLAY_BUTTON = pygame.image.load('images/play_button.png')
-OPTIONS_BUTTON = pygame.image.load('images/options_button.png')
-EXIT_BUTTON = pygame.image.load('images/exit_button.png')
-BACK_BUTTON = pygame.image.load('images/back_button.png')
+PLAY_BUTTON = pygame.image.load('images/Buttons/play_button.png')
+OPTIONS_BUTTON = pygame.image.load('images/Buttons/options_button.png')
+EXIT_BUTTON = pygame.image.load('images/buttons/exit_button.png')
+BACK_BUTTON = pygame.image.load('images/buttons/back_button.png')
 
-HOVERED_PLAY = pygame.image.load('images/hovered_play.png')
-HOVERED_OPTIONS = pygame.image.load('images/hovered_options.png')
-HOVERED_EXIT = pygame.image.load('images/hovered_exit.png')
-HOVERED_BACK = pygame.image.load('images/hovered_back.png')
+PLAYER_COLOR_RED = pygame.image.load('images/buttons/player_red_button.png')
+PLAYER_COLOR_YELLOW = pygame.image.load('images/buttons/player_yellow_button.png')
+
+HOVERED_PLAY = pygame.image.load('images/buttons/hovered_play.png')
+HOVERED_OPTIONS = pygame.image.load('images/buttons/hovered_options.png')
+HOVERED_EXIT = pygame.image.load('images/buttons/hovered_exit.png')
+HOVERED_BACK = pygame.image.load('images/buttons/hovered_back.png')
+
+HOVERED_COLOR_RED = pygame.image.load('images/buttons/hovered_player_red.png')
+HOVERED_COLOR_YELLOW = pygame.image.load('images/buttons/hovered_player_yellow.png')
+
 
 # COLORS
 BLACK = (0, 0, 0)

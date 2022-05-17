@@ -42,7 +42,10 @@ class Board:
 
         for i in range(5, -1, -1):
             if self.field[i][col] == 0:
-                self.field[i][col] = 1
+                if self.player_color == 'Red':
+                    self.field[i][col] = 1
+                else:
+                    self.field[i][col] = 2
                 self.player_turn = False
                 return
 

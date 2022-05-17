@@ -10,6 +10,9 @@ class AI:
 
         for i in range(5, -1, -1):
             if board.field[i][col] == 0:
-                board.field[i][col] = 2
+                if board.player_color == 'Red':
+                    board.field[i][col] = 2
+                else:
+                    board.field[i][col] = 1
                 board.player_turn = True
                 return
