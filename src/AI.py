@@ -2,7 +2,6 @@ import random
 
 class AI:
     def __init__(self):
-        self.computer_color = 'Yellow'
         self.column_list = [0, 1, 2, 3, 4, 5, 6]
 
     def generate_move(self, board):

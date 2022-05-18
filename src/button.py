@@ -13,3 +13,9 @@ class Button:
             window.blit(self.highlighted, (self.rect.x, self.rect.y))
         else:
             window.blit(self.image, (self.rect.x, self.rect.y))
+
+    def is_mouse_over(self, mouse_pos):
+        if self.rect.collidepoint(mouse_pos):
+            return True
+        else:
+            return False

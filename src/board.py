@@ -11,6 +11,7 @@ class Board:
         self.player_turn = True
         self.game_over = False
         self.player_color = 'Red'
+        self.pvp = False
 
     # Functions
     def draw_rect(self, surface, fill_color, outline_color, rect, border = 1):
@@ -46,8 +47,18 @@ class Board:
                     self.field[i][col] = 1
                 else:
                     self.field[i][col] = 2
-                self.player_turn = False
+
+                if not self.pvp:
+                    self.player_turn = False
+                else:
+                    self.set_player_symbol()
                 return
+
+    def set_player_symbol(self):
+        if self.player_color == 'Red':
+            self.player_color = 'Yellow'
+        else:
+            self.player_color = 'Red'
 
     def check_winner(self):
         # Check rows for a winner.
@@ -93,5 +104,14 @@ class Board:
 
     def reset(self):
         self.field = [[0 for i in range(7)] for j in range(6)]
-        self.player_turn = True
         self.game_over = False
+
+        if not self.pvp:
+            if self.player_color == 'Red':
+                self.player_turn = True
+            else:
+                self.player_turn = False
+        else:
+            self.player_turn = True
+            if self.player_color == 'Yellow':
+                self.set_player_symbol()
