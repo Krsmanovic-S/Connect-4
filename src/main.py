@@ -1,6 +1,4 @@
-from game import *
-
-pygame.init()
+from game import Game
 
 if __name__ == "__main__":
     connect_4 = Game()
