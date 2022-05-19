@@ -1,4 +1,7 @@
+import copy
+
 from constants import *
+from copy import deepcopy
 
 
 class Board:
@@ -61,6 +64,29 @@ class Board:
             self.player_color = 'Yellow'
         else:
             self.player_color = 'Red'
+
+    def get_valid_columns(self):
+        valid_columns = []
+        for col in range(6):
+            if self.field[0][col] == 0:
+                valid_columns.append(col)
+        return valid_columns
+
+    def is_valid_move(self, col):
+        for row in range(6):
+            if self.field[row][col] == 0:
+                return True
+        return False
+
+    def make_move(self, col, player):
+        # We copy the current board object into a temporary
+        # one so that we can use it with the minimax and not
+        # alter the current state of the actual board.
+        temp_board = copy.deepcopy(self)
+        for row in range(5, -1, -1):
+            if temp_board.field[row][col] == 0:
+                temp_board.field[row][col] = player
+                return temp_board, row, col
 
     def check_winner(self):
         # Check rows for a winner.

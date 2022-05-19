@@ -4,7 +4,6 @@ from button import Button
 
 
 class Game:
-    # Constructor
     def __init__(self):
         pygame.init()
 
@@ -96,9 +95,12 @@ class Game:
                         return
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
-                        # Handle button presses.
                         if self._player_color_red.is_mouse_over(self.mouse_pos):
+                            # is_player_red controls which button appears,
+                            # we also need to change the computers symbol
+                            # when the button gets pressed.
                             self.is_player_red = not self.is_player_red
+                            self.computer.change_computer_symbol()
                             break
                         if self._pvp_enabled.is_mouse_over(self.mouse_pos):
                             self.board.pvp = not self.board.pvp
@@ -148,7 +150,7 @@ class Game:
 
         if not self.board.game_over and not self.board.player_turn\
            and not self.board.pvp:
-            self.computer.generate_move(self.board)
+            self.computer.generate_best(self.board)
 
     def render(self):
         self.board.draw_grid(self.window, self.mouse_pos[0])
