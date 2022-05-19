@@ -1,12 +1,13 @@
 import pygame
+pygame.init()
 
 # WINDOW PROPERTIES
 WIDTH = 840
 HEIGHT = 720
 
-#--------------------------------------------#
+# -------------------------------------------#
 #                   IMAGES                   #
-#--------------------------------------------#
+# -------------------------------------------#
 WINDOW_ICON = pygame.image.load('images/icons/window_logo.png')
 BG_IMAGE = pygame.image.load('images/icons/logo.png')
 
@@ -28,15 +29,15 @@ HOVERED_COLOR_YELLOW = pygame.image.load('images/buttons/hovered_player_yellow.p
 HOVERED_PVP_ENABLED = pygame.image.load('images/buttons/hovered_pvp_enabled.png')
 HOVERED_PVP_DISABLED = pygame.image.load('images/buttons/hovered_pvp_disabled.png')
 
-#--------------------------------------------#
+# -------------------------------------------#
 #                   COLORS                   #
-#--------------------------------------------#
+# -------------------------------------------#
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (75, 75, 75)
 HIGHLIGHTED = (105, 105, 105)
 LIGHT_BLUE = (202, 228, 241)
 
-YELLOW = (255,255,0)
+YELLOW = (255, 255, 0)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
