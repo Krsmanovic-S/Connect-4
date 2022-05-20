@@ -3,7 +3,6 @@ from constants import *
 
 
 class Board:
-    # Constructor
     def __init__(self):
         self.field = [[0 for _ in range(7)] for _ in range(6)]
 

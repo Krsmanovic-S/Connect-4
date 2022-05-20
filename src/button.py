@@ -1,6 +1,5 @@
 
 class Button:
-    # Constructor
     def __init__(self, x, y, image, highlighted):
         self.image = image
         self.highlighted = highlighted
@@ -9,7 +8,7 @@ class Button:
 
     # Functions
     def draw(self, window, mouse):
-        if self.rect.collidepoint(mouse[0], mouse[1]):
+        if self.rect.collidepoint(mouse[0] - 5, mouse[1] - 5):
             window.blit(self.highlighted, (self.rect.x, self.rect.y))
         else:
             window.blit(self.image, (self.rect.x, self.rect.y))
@@ -19,3 +18,9 @@ class Button:
             return True
         else:
             return False
+
+    def draw_changing_button(self, window, mouse, button, check: bool):
+        if not check:
+            self.draw(window, mouse)
+        else:
+            button.draw(window, mouse)

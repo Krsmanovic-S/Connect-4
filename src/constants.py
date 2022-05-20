@@ -19,6 +19,9 @@ PLAYER_COLOR_RED = pygame.image.load('images/buttons/player_red_button.png')
 PLAYER_COLOR_YELLOW = pygame.image.load('images/buttons/player_yellow_button.png')
 PVP_ENABLED = pygame.image.load('images/buttons/pvp_enabled_button.png')
 PVP_DISABLED = pygame.image.load('images/buttons/pvp_disabled_button.png')
+EASY_DIFFICULTY = pygame.image.load('images/buttons/easy_difficulty.png')
+MEDIUM_DIFFICULTY = pygame.image.load('images/buttons/medium_difficulty.png')
+HARD_DIFFICULTY = pygame.image.load('images/buttons/hard_difficulty.png')
 
 HOVERED_PLAY = pygame.image.load('images/buttons/hovered_play.png')
 HOVERED_OPTIONS = pygame.image.load('images/buttons/hovered_options.png')
@@ -28,6 +31,10 @@ HOVERED_COLOR_RED = pygame.image.load('images/buttons/hovered_player_red.png')
 HOVERED_COLOR_YELLOW = pygame.image.load('images/buttons/hovered_player_yellow.png')
 HOVERED_PVP_ENABLED = pygame.image.load('images/buttons/hovered_pvp_enabled.png')
 HOVERED_PVP_DISABLED = pygame.image.load('images/buttons/hovered_pvp_disabled.png')
+HOVERED_EASY_DIFFICULTY = pygame.image.load('images/buttons/hovered_easy_difficulty.png')
+HOVERED_MEDIUM_DIFFICULTY = pygame.image.load('images/buttons/hovered_medium_difficulty.png')
+HOVERED_HARD_DIFFICULTY = pygame.image.load('images/buttons/hovered_hard_difficulty.png')
+
 
 # -------------------------------------------#
 #                   COLORS                   #

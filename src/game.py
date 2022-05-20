@@ -5,8 +5,6 @@ from button import Button
 
 class Game:
     def __init__(self):
-        pygame.init()
-
         # Window settings
         self.window = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_icon(WINDOW_ICON)
@@ -18,22 +16,25 @@ class Game:
         self.computer = AI()
         self.is_player_red = True
 
-        # Buttons
+        # Main Menu Buttons
         self._play_button = Button(WIDTH // 2 - 200, 150, PLAY_BUTTON, HOVERED_PLAY)
         self._options_button = Button(WIDTH // 2 - 200, 350, OPTIONS_BUTTON, HOVERED_OPTIONS)
         self._exit_button = Button(WIDTH // 2 - 200, 550, EXIT_BUTTON, HOVERED_EXIT)
 
-        self._player_color_red = Button(WIDTH // 2 - 200, 150, PLAYER_COLOR_RED, HOVERED_COLOR_RED)
-        self._player_color_yellow = Button(WIDTH // 2 - 200, 150, PLAYER_COLOR_YELLOW, HOVERED_COLOR_YELLOW)
+        # Options Menu Buttons
+        self._player_red = Button(WIDTH // 2 - 200, 150, PLAYER_COLOR_RED, HOVERED_COLOR_RED)
+        self._player_yellow = Button(WIDTH // 2 - 200, 150, PLAYER_COLOR_YELLOW, HOVERED_COLOR_YELLOW)
         self._pvp_disabled = Button(WIDTH // 2 - 200, 350, PVP_DISABLED, HOVERED_PVP_DISABLED)
         self._pvp_enabled = Button(WIDTH // 2 - 200, 350, PVP_ENABLED, HOVERED_PVP_ENABLED)
 
-        # Placeholders (Options Menu)
-        self.holder_3 = Button(WIDTH // 2 - 200, 550, PLAYER_COLOR_RED, HOVERED_COLOR_RED)
+        self._easy_difficulty = Button(WIDTH // 2 - 200, 550, EASY_DIFFICULTY, HOVERED_EASY_DIFFICULTY)
+        self._medium_difficulty = Button(WIDTH // 2 - 200, 550, MEDIUM_DIFFICULTY, HOVERED_MEDIUM_DIFFICULTY)
+        self._hard_difficulty = Button(WIDTH // 2 - 200, 550, HARD_DIFFICULTY, HOVERED_HARD_DIFFICULTY)
 
-        # Menu control
+        # Menu/Button Control
         self._in_menu = True
         self._in_options = False
+        self.difficulty = 1
 
     # Menu Functions
     def main_menu(self):
@@ -60,6 +61,7 @@ class Game:
                                 self.board.player_color = 'Yellow'
                             self._in_menu = False
                             self._in_options = False
+                            self.computer.search_depth = 2 * self.difficulty
                             return
                         # Transition to the options' menu if player clicks the options button.
                         elif self._options_button.is_mouse_over(self.mouse_pos):
@@ -95,7 +97,7 @@ class Game:
                         return
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
-                        if self._player_color_red.is_mouse_over(self.mouse_pos):
+                        if self._player_red.is_mouse_over(self.mouse_pos):
                             # is_player_red controls which button appears,
                             # we also need to change the computers symbol
                             # when the button gets pressed.
@@ -105,18 +107,24 @@ class Game:
                         if self._pvp_enabled.is_mouse_over(self.mouse_pos):
                             self.board.pvp = not self.board.pvp
                             break
+                        if self._easy_difficulty.is_mouse_over(self.mouse_pos):
+                            if self.difficulty == 3:
+                                self.difficulty = 1
+                            else:
+                                self.difficulty += 1
 
-            if self.is_player_red:
-                self._player_color_red.draw(self.window, self.mouse_pos)
+            self._player_red.draw_changing_button(self.window, self.mouse_pos,
+                                                  self._player_yellow, self.is_player_red)
+
+            self._pvp_disabled.draw_changing_button(self.window, self.mouse_pos,
+                                                    self._pvp_enabled, self.board.pvp)
+
+            if self.difficulty == 1:
+                self._easy_difficulty.draw(self.window, self.mouse_pos)
+            elif self.difficulty == 2:
+                self._medium_difficulty.draw(self.window, self.mouse_pos)
             else:
-                self._player_color_yellow.draw(self.window, self.mouse_pos)
-
-            if self.board.pvp:
-                self._pvp_enabled.draw(self.window, self.mouse_pos)
-            else:
-                self._pvp_disabled.draw(self.window, self.mouse_pos)
-
-            self.holder_3.draw(self.window, self.mouse_pos)
+                self._hard_difficulty.draw(self.window, self.mouse_pos)
 
             pygame.display.update()
 

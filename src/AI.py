@@ -4,7 +4,7 @@ from random import shuffle
 class AI:
     def __init__(self):
         self.best_move = 0
-        self.search_depth = 4
+        self.search_depth = 2
         self.computer_symbol = 2
 
     def change_computer_symbol(self):
