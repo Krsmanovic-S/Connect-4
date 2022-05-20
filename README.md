@@ -1,5 +1,13 @@
 # Connect 4
- Connect 4 implemented in Python using **Pygame**. Currently features an AI opponent that plays randomly. In the future I will implement the minimax algorithm for the AI to use, as well as other features like PvP, switching colors, fully functional options menu and so on. For now a basic menu is in place that works, it will be expanded later. The sprites for buttons, the logo and the font are not my own, they were downloaded for free from the internet.
+ Connect 4 implemented in Python using **Pygame**.
+ 
+ Features:
+ 
+ -Fully-functional main and options menu
+ 
+ -Ability to change which color you play, as well as if you want to play versus another player on the same machine
+ 
+ -Difficulty setting that affects the search depth for the AI, who plays with the alpha-beta pruning algorithm
  
  --------------------------------
  Button pack ---> https://pngtree.com/freepng/set-of-blue-game-buttons-and-ui-kit-for-games_6259710.html
