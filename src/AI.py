@@ -4,7 +4,7 @@ from random import shuffle
 class AI:
     def __init__(self):
         self.best_move = 0
-        self.search_depth = 3
+        self.search_depth = 4
         self.computer_symbol = 2
 
     def change_computer_symbol(self):
@@ -20,12 +20,13 @@ class AI:
             if board.field[i][self.best_move] == 0:
                 board.field[i][self.best_move] = self.computer_symbol
                 board.player_turn = True
+                board.played_moves += 1
                 return
 
     @staticmethod
     def count_sequence(board, player, length):
         # Function will count the amount of connected pieces
-        # that are a certain length.
+        # that are a certain length for a certain player.
         def vertical(row, col):
             count = 0
             for rowIndex in range(row, 6):
@@ -60,7 +61,7 @@ class AI:
                     count += 1
                 else:
                     break
-                col_index += 1  # increment column when row is incremented
+                col_index += 1
             if count >= length:
                 return 1
             else:
@@ -76,7 +77,7 @@ class AI:
                     count += 1
                 else:
                     break
-                col_index += 1  # increment column when row incremented
+                col_index += 1
             if count >= length:
                 return 1
             else:
@@ -159,8 +160,6 @@ class AI:
             return self.utility_value(board, player)
 
         valid_moves = board.get_valid_columns()
-        beta = beta
-
         for move in valid_moves:
             board_score = float("inf")
 

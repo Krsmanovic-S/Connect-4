@@ -1,13 +1,11 @@
 import copy
-
 from constants import *
-from copy import deepcopy
 
 
 class Board:
     # Constructor
     def __init__(self):
-        self.field = [[0 for i in range(7)] for j in range(6)]
+        self.field = [[0 for _ in range(7)] for _ in range(6)]
 
         self._field_height = len(self.field[0])
         self._field_width = len(self.field)
@@ -16,6 +14,7 @@ class Board:
         self.game_over = False
         self.player_color = 'Red'
         self.pvp = False
+        self.played_moves = 0
 
     # Functions
     @staticmethod
@@ -53,6 +52,8 @@ class Board:
                 else:
                     self.field[i][col] = 2
 
+                self.played_moves += 1
+
                 if not self.pvp:
                     self.player_turn = False
                 else:
@@ -89,49 +90,72 @@ class Board:
                 return temp_board, row, col
 
     def check_winner(self):
-        # Check rows for a winner.
-        for y in range(self._field_height):
+        def check_rows():
+            for y in range(self._field_height):
+                for x in range(self._field_width - 3):
+                    if self.field[x][y] != 0 and \
+                       self.field[x][y] == self.field[x + 1][y] and \
+                       self.field[x + 1][y] == self.field[x + 2][y] and \
+                       self.field[x + 2][y] == self.field[x + 3][y]:
+                        self.field[x][y], \
+                        self.field[x+1][y], \
+                        self.field[x+2][y], \
+                        self.field[x+3][y] = 3, 3, 3, 3
+                        self.game_over = True
+
+        def check_columns():
+            for x in range(self._field_width):
+                for y in range(self._field_height - 3):
+                    if self.field[x][y] != 0 and \
+                       self.field[x][y] == self.field[x][y + 1] and \
+                       self.field[x][y + 1] == self.field[x][y + 2] and \
+                       self.field[x][y + 2] == self.field[x][y + 3]:
+                        self.field[x][y], \
+                        self.field[x][y+1], \
+                        self.field[x][y+2], \
+                        self.field[x][y+3] = 3, 3, 3, 3
+                        self.game_over = True
+
+        def check_diagonals():
+            # Check left->right diagonals.
             for x in range(self._field_width - 3):
-                if self.field[x][y] == self.field[x + 1][y] and \
-                   self.field[x + 1][y] == self.field[x + 2][y] and \
-                   self.field[x + 2][y] == self.field[x + 3][y]:
-                    if self.field[x][y] != 0:
-                        self.field[x][y], self.field[x+1][y], self.field[x+2][y], self.field[x+3][y] = 3, 3, 3, 3
+                for y in range(3, self._field_height):
+                    if self.field[x][y] != 0 and \
+                       self.field[x][y] == self.field[x + 1][y - 1] and \
+                       self.field[x + 1][y - 1] == self.field[x + 2][y - 2] and \
+                       self.field[x + 2][y - 2] == self.field[x + 3][y - 3]:
+                        self.field[x][y], \
+                        self.field[x+1][y-1], \
+                        self.field[x+2][y-2], \
+                        self.field[x+3][y-3] = 3, 3, 3, 3
                         self.game_over = True
 
-        # Check columns.
-        for x in range(self._field_width):
-            for y in range(self._field_height - 3):
-                if self.field[x][y] == self.field[x][y + 1] and \
-                   self.field[x][y + 1] == self.field[x][y + 2] and \
-                   self.field[x][y + 2] == self.field[x][y + 3]:
-                    if self.field[x][y] != 0:
-                        self.field[x][y], self.field[x][y+1], self.field[x][y+2], self.field[x][y+3] = 3, 3, 3, 3
+            # Check right->left diagonals.
+            for x in range(self._field_width - 3):
+                for y in range(self._field_height - 3):
+                    if self.field[x][y] != 0 and \
+                       self.field[x][y] == self.field[x + 1][y + 1] and \
+                       self.field[x + 1][y + 1] == self.field[x + 2][y + 2] and \
+                       self.field[x + 2][y + 2] == self.field[x + 3][y + 3]:
+                        self.field[x][y], \
+                        self.field[x+1][y+1], \
+                        self.field[x+2][y+2], \
+                        self.field[x+3][y+3] = 3, 3, 3, 3
                         self.game_over = True
 
-        # Check left->right diagonals.
-        for x in range(self._field_width - 3):
-            for y in range(3, self._field_height):
-                if self.field[x][y] == self.field[x + 1][y - 1] and \
-                   self.field[x + 1][y - 1] == self.field[x + 2][y - 2] and \
-                   self.field[x + 2][y - 2] == self.field[x + 3][y - 3]:
-                    if self.field[x][y] != 0:
-                        self.field[x][y], self.field[x+1][y-1], self.field[x+2][y-2], self.field[x+3][y-3] = 3, 3, 3, 3
-                        self.game_over = True
+        check_rows()
+        check_columns()
+        check_diagonals()
 
-        # Check right->left diagonals.
-        for x in range(self._field_width - 3):
-            for y in range(self._field_height - 3):
-                if self.field[x][y] == self.field[x + 1][y + 1] and \
-                   self.field[x + 1][y + 1] == self.field[x + 2][y + 2] and \
-                   self.field[x + 2][y + 2] == self.field[x + 3][y + 3]:
-                    if self.field[x][y] != 0:
-                        self.field[x][y], self.field[x+1][y+1], self.field[x+2][y+2], self.field[x+3][y+3] = 3, 3, 3, 3
-                        self.game_over = True
+        # 42 Moves played and no winner means a draw.
+        if self.played_moves == 42:
+            self.game_over = True
+            return
 
     def reset(self):
-        self.field = [[0 for i in range(7)] for j in range(6)]
+        self.field = [[0 for _ in range(7)] for _ in range(6)]
         self.game_over = False
+        self.played_moves = 0
 
         if not self.pvp:
             if self.player_color == 'Red':
