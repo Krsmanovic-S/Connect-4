@@ -20,6 +20,8 @@ class Button:
             return False
 
     def draw_changing_button(self, window, mouse, button, check: bool):
+        # This function is used for buttons which have multiple images
+        # representing them, here we can decide which one to show.
         if not check:
             self.draw(window, mouse)
         else:

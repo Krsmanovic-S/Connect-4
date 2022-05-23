@@ -33,11 +33,6 @@ class Game:
         self._medium_difficulty = Button(WIDTH // 2 - 200, 550, MEDIUM_DIFFICULTY, HOVERED_MEDIUM_DIFFICULTY)
         self._hard_difficulty = Button(WIDTH // 2 - 200, 550, HARD_DIFFICULTY, HOVERED_HARD_DIFFICULTY)
 
-        # Menu/Button Control
-        self._in_menu = True
-        self._in_options = False
-        self.difficulty = 1
-
     # Menu Functions
     def main_menu(self):
         # Function that sets up the main menu and runs its game-loop.
@@ -61,15 +56,10 @@ class Game:
                             else:
                                 self.board.player_turn = False
                                 self.board.player_color = 'Yellow'
-                            self._in_menu = False
-                            self._in_options = False
-                            self.computer.search_depth = 2 * self.difficulty
-                            return
+                            self.run()
                         # Transition to the options' menu if player clicks the options button.
                         elif self._options_button.is_mouse_over(self.mouse_pos):
-                            self._in_options = True
-                            self._in_menu = False
-                            return
+                            self.options_menu()
                         # Open the git url if the icon is selected.
                         elif self._git_button.is_mouse_over(self.mouse_pos):
                             webbrowser.open(GIT_URL, new=0, autoraise=True)
@@ -98,15 +88,12 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     # Transitioning from the options' menu to the main menu.
                     if event.key == pygame.K_ESCAPE:
-                        self._in_options = False
-                        self._in_menu = True
-                        return
+                        self.main_menu()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         if self._player_red.is_mouse_over(self.mouse_pos):
                             # is_player_red controls which button appears,
-                            # we also need to change the computers symbol
-                            # when the button gets pressed.
+                            # we also change the computers symbol.
                             self.is_player_red = not self.is_player_red
                             self.computer.change_computer_symbol()
                             break
@@ -114,10 +101,7 @@ class Game:
                             self.board.pvp = not self.board.pvp
                             break
                         if self._easy_difficulty.is_mouse_over(self.mouse_pos):
-                            if self.difficulty == 3:
-                                self.difficulty = 1
-                            else:
-                                self.difficulty += 1
+                            self.computer.set_search_depth()
 
             self._player_red.draw_changing_button(self.window, self.mouse_pos,
                                                   self._player_yellow, self.is_player_red)
@@ -125,12 +109,14 @@ class Game:
             self._pvp_disabled.draw_changing_button(self.window, self.mouse_pos,
                                                     self._pvp_enabled, self.board.pvp)
 
-            if self.difficulty == 1:
+            if self.computer.search_depth == 1:
                 self._easy_difficulty.draw(self.window, self.mouse_pos)
-            elif self.difficulty == 2:
+            elif self.computer.search_depth == 2:
                 self._medium_difficulty.draw(self.window, self.mouse_pos)
             else:
                 self._hard_difficulty.draw(self.window, self.mouse_pos)
+
+            self._git_button.draw(self.window, self.mouse_pos)
 
             pygame.display.update()
 
@@ -143,11 +129,12 @@ class Game:
                 pygame.quit()
                 quit()
             elif event.type == pygame.KEYDOWN:
+                # Transition back to the main menu and reset the board.
                 if event.key == pygame.K_ESCAPE:
                     self.board.reset()
-                    self._in_menu = True
+                    self.main_menu()
                     return
-                # Resetting the board when pressing 'r'
+                # Resetting the board when pressing 'r'.
                 elif event.key == pygame.K_r:
                     self.board.reset()
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -172,11 +159,6 @@ class Game:
 
     def run(self):
         while True:
-            if self._in_options:
-                self.options_menu()
-            elif self._in_menu:
-                self.main_menu()
-            else:
-                self.update_events()
-                self.update()
-                self.render()
+            self.update_events()
+            self.update()
+            self.render()

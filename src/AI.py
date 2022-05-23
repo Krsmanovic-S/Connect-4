@@ -4,7 +4,7 @@ from random import shuffle
 class AI:
     def __init__(self):
         self.best_move = 0
-        self.search_depth = 2
+        self.search_depth = 1
         self.computer_symbol = 2
 
     def change_computer_symbol(self):
@@ -13,8 +13,14 @@ class AI:
         else:
             self.computer_symbol = 2
 
+    def set_search_depth(self):
+        if self.search_depth == 3:
+            self.search_depth = 1
+        else:
+            self.search_depth += 1
+
     def generate_best(self, board):
-        self.alpha_beta_minimax(board, self.search_depth, self.computer_symbol)
+        self.alpha_beta_minimax(board, self.search_depth * 2, self.computer_symbol)
 
         for i in range(5, -1, -1):
             if board.field[i][self.best_move] == 0:
@@ -150,6 +156,7 @@ class AI:
                 self.best_move = move
 
     def minimize_beta(self, board, depth, alpha, beta, player, opponent):
+        # Minimizer tries to lower the score as much as he can.
         valid_moves = []
         for col in range(7):
             if board.is_valid_move(col):
@@ -173,6 +180,7 @@ class AI:
         return beta
 
     def maximize_alpha(self, board, depth, alpha, beta, player, opponent):
+        # Maximizer tries to increase the score as much as he can.
         valid_moves = []
         for col in range(7):
             if board.is_valid_move(col):
@@ -186,7 +194,6 @@ class AI:
 
         for move in valid_moves:
             board_score = float("-inf")
-            # We must always have the order of beta < board_score < alpha.
             if alpha < beta:
                 temp_board = board.make_move(move, player)[0]
                 board_score = self.minimize_beta(temp_board, depth - 1, alpha, beta, player, opponent)
