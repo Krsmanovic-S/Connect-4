@@ -17,29 +17,42 @@ class Board:
 
     # Functions
     @staticmethod
-    def draw_rect(surface, fill_color, outline_color, rect, border=1):
-        surface.fill(outline_color, rect)
-        surface.fill(fill_color, rect.inflate(-border * 2, -border * 2))
+    def draw_rect(window, fill_color, outline_color, rect, border=1):
+        window.fill(outline_color, rect)
+        window.fill(fill_color, rect.inflate(-border * 2, -border * 2))
+
+    @staticmethod
+    def draw_dropping_piece(window, column, is_player_red: str):
+        x_position = column * (WIDTH // 7) + 60
+
+        if is_player_red == 'Red':
+            pygame.draw.circle(window, RED, (x_position, 60), 55, 0)
+        elif is_player_red == 'Yellow':
+            pygame.draw.circle(window, YELLOW, (x_position, 60), 55, 0)
 
     def draw_grid(self, window, mouse_x):
         # Width of the window as well as all the colors are defined in constants.py
         for i in range(6):
             for j in range(7):
-                cell = pygame.Rect(j * (WIDTH // 7), i * (WIDTH // 7), 120, 120)
+                cell = pygame.Rect(j * (WIDTH // 7), i * (WIDTH // 7) + 120, 120, 120)
 
+                # Highlight the column that the player is hovering over and
+                # draw the dropping piece above the board.
                 if mouse_x // 120 == j:
                     self.draw_rect(window, HIGHLIGHTED, BLACK, cell)
+                    self.draw_dropping_piece(window, j, self.player_color)
                 else:
-                    self.draw_rect(window, GRAY, BLACK, cell)
+                    pygame.draw.circle(window, LIGHT_BLUE, (j * (WIDTH // 7) + 60, 60), 55, 0)
+                    self.draw_rect(window, TABLE_BLUE, BLACK, cell)
 
                 if self.field[i][j] == 0:
-                    pygame.draw.circle(window, WHITE, (j * (WIDTH // 7) + 60, i * (WIDTH // 7) + 60), 55, 0)
+                    pygame.draw.circle(window, WHITE, (j * (WIDTH // 7) + 60, i * (WIDTH // 7) + 180), 55, 0)
                 elif self.field[i][j] == 1:
-                    pygame.draw.circle(window, RED, (j * (WIDTH // 7) + 60, i * (WIDTH // 7) + 60), 55, 0)
+                    pygame.draw.circle(window, RED, (j * (WIDTH // 7) + 60, i * (WIDTH // 7) + 180), 55, 0)
                 elif self.field[i][j] == 2:
-                    pygame.draw.circle(window, YELLOW, (j * (WIDTH // 7) + 60, i * (WIDTH // 7) + 60), 55, 0)
+                    pygame.draw.circle(window, YELLOW, (j * (WIDTH // 7) + 60, i * (WIDTH // 7) + 180), 55, 0)
                 else:
-                    pygame.draw.circle(window, GREEN, (j * (WIDTH // 7) + 60, i * (WIDTH // 7) + 60), 55, 0)
+                    pygame.draw.circle(window, GREEN, (j * (WIDTH // 7) + 60, i * (WIDTH // 7) + 180), 55, 0)
 
     def play_move(self, mouse):
         col = mouse[0] // (WIDTH // 7)

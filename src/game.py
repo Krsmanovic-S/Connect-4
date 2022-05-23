@@ -18,20 +18,25 @@ class Game:
         self.is_player_red = True
 
         # Main Menu Buttons
-        self._play_button = Button(WIDTH // 2 - 200, 150, PLAY_BUTTON, HOVERED_PLAY)
-        self._options_button = Button(WIDTH // 2 - 200, 350, OPTIONS_BUTTON, HOVERED_OPTIONS)
-        self._exit_button = Button(WIDTH // 2 - 200, 550, EXIT_BUTTON, HOVERED_EXIT)
-        self._git_button = Button(30, 600, GIT_ICON, GIT_ICON)
+        self._play_button = Button(WIDTH // 2 - 200, 175, PLAY_BUTTON, HOVERED_PLAY)
+        self._options_button = Button(WIDTH // 2 - 200, 400, OPTIONS_BUTTON, HOVERED_OPTIONS)
+        self._exit_button = Button(WIDTH // 2 - 200, 625, EXIT_BUTTON, HOVERED_EXIT)
+
+        # Git/LinkedIn Buttons
+        self._git_button = Button(30, 700, GIT_ICON, HOVERED_GIT)
+        self._linkedin_button = Button(720, 700, LINKEDIN_ICON, HOVERED_LINKEDIN)
 
         # Options Menu Buttons
-        self._player_red = Button(WIDTH // 2 - 200, 150, PLAYER_COLOR_RED, HOVERED_COLOR_RED)
-        self._player_yellow = Button(WIDTH // 2 - 200, 150, PLAYER_COLOR_YELLOW, HOVERED_COLOR_YELLOW)
-        self._pvp_disabled = Button(WIDTH // 2 - 200, 350, PVP_DISABLED, HOVERED_PVP_DISABLED)
-        self._pvp_enabled = Button(WIDTH // 2 - 200, 350, PVP_ENABLED, HOVERED_PVP_ENABLED)
+        self._player_red = Button(WIDTH // 2 - 200, 175, PLAYER_COLOR_RED, HOVERED_COLOR_RED)
+        self._player_yellow = Button(WIDTH // 2 - 200, 175, PLAYER_COLOR_YELLOW, HOVERED_COLOR_YELLOW)
+        self._pvp_disabled = Button(WIDTH // 2 - 200, 400, PVP_DISABLED, HOVERED_PVP_DISABLED)
+        self._pvp_enabled = Button(WIDTH // 2 - 200, 400, PVP_ENABLED, HOVERED_PVP_ENABLED)
 
-        self._easy_difficulty = Button(WIDTH // 2 - 200, 550, EASY_DIFFICULTY, HOVERED_EASY_DIFFICULTY)
-        self._medium_difficulty = Button(WIDTH // 2 - 200, 550, MEDIUM_DIFFICULTY, HOVERED_MEDIUM_DIFFICULTY)
-        self._hard_difficulty = Button(WIDTH // 2 - 200, 550, HARD_DIFFICULTY, HOVERED_HARD_DIFFICULTY)
+        self._easy_difficulty = Button(WIDTH // 2 - 200, 625, EASY_DIFFICULTY, HOVERED_EASY_DIFFICULTY)
+        self._medium_difficulty = Button(WIDTH // 2 - 200, 625, MEDIUM_DIFFICULTY, HOVERED_MEDIUM_DIFFICULTY)
+        self._hard_difficulty = Button(WIDTH // 2 - 200, 625, HARD_DIFFICULTY, HOVERED_HARD_DIFFICULTY)
+
+        self._back_arrow = Button(720, 700, BACK_ARROW, HOVERED_BACK_ARROW)
 
     # Menu Functions
     def main_menu(self):
@@ -63,6 +68,9 @@ class Game:
                         # Open the git url if the icon is selected.
                         elif self._git_button.is_mouse_over(self.mouse_pos):
                             webbrowser.open(GIT_URL, new=0, autoraise=True)
+                        # Open the LinkedIn url if the icon is selected.
+                        elif self._linkedin_button.is_mouse_over(self.mouse_pos):
+                            webbrowser.open(LINKEDIN_URL, new=0, autoraise=True)
                         elif self._exit_button.is_mouse_over(self.mouse_pos):
                             pygame.quit()
                             quit()
@@ -70,7 +78,9 @@ class Game:
             self._play_button.draw(self.window, self.mouse_pos)
             self._options_button.draw(self.window, self.mouse_pos)
             self._exit_button.draw(self.window, self.mouse_pos)
+
             self._git_button.draw(self.window, self.mouse_pos)
+            self._linkedin_button.draw(self.window, self.mouse_pos)
 
             pygame.display.update()
 
@@ -86,7 +96,7 @@ class Game:
                     pygame.quit()
                     quit()
                 elif event.type == pygame.KEYDOWN:
-                    # Transitioning from the options' menu to the main menu.
+                    # Transitioning from the options' menu to the main menu using ESC.
                     if event.key == pygame.K_ESCAPE:
                         self.main_menu()
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -97,14 +107,21 @@ class Game:
                             self.is_player_red = not self.is_player_red
                             self.computer.change_computer_symbol()
                             break
-                        if self._pvp_enabled.is_mouse_over(self.mouse_pos):
+                        elif self._pvp_enabled.is_mouse_over(self.mouse_pos):
                             self.board.pvp = not self.board.pvp
                             break
-                        if self._easy_difficulty.is_mouse_over(self.mouse_pos):
+                        elif self._easy_difficulty.is_mouse_over(self.mouse_pos):
                             self.computer.set_search_depth()
+                        elif self._git_button.is_mouse_over(self.mouse_pos):
+                            webbrowser.open(GIT_URL, new=0, autoraise=True)
+                        # Transitioning to the main menu with clicking on the arrow.
+                        elif self._back_arrow.is_mouse_over(self.mouse_pos):
+                            self.main_menu()
 
-            self._player_red.draw_changing_button(self.window, self.mouse_pos,
-                                                  self._player_yellow, self.is_player_red)
+            self._back_arrow.draw(self.window, self.mouse_pos)
+
+            self._player_yellow.draw_changing_button(self.window, self.mouse_pos,
+                                                     self._player_red, self.is_player_red)
 
             self._pvp_disabled.draw_changing_button(self.window, self.mouse_pos,
                                                     self._pvp_enabled, self.board.pvp)
@@ -115,8 +132,6 @@ class Game:
                 self._medium_difficulty.draw(self.window, self.mouse_pos)
             else:
                 self._hard_difficulty.draw(self.window, self.mouse_pos)
-
-            self._git_button.draw(self.window, self.mouse_pos)
 
             pygame.display.update()
 
@@ -158,6 +173,7 @@ class Game:
         pygame.display.update()
 
     def run(self):
+        self.window.fill(LIGHT_BLUE)
         while True:
             self.update_events()
             self.update()
