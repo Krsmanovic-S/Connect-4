@@ -3,11 +3,11 @@
  
  Features:
  
- -Fully-functional main and options menu
+ - Fully-functional main and options menu
  
- -Ability to change which color you play, as well as if you want to play versus another player on the same machine
+ - Ability to change which color you play, as well as if you want to play versus another player on the same machine
  
- -Difficulty setting that affects the search depth for the AI, who plays with the alpha-beta pruning algorithm
+ - Difficulty setting that affects the search depth for the AI, who plays with the alpha-beta pruning algorithm
  
  --------------------------------
  Button pack ---> https://pngtree.com/freepng/set-of-blue-game-buttons-and-ui-kit-for-games_6259710.html
@@ -18,6 +18,7 @@
  The settings/workspace I used for compiling:
   
     Python Version ---> 3.10.4
+    
     IDE            ---> PyCharm
 --------------------------------
 
