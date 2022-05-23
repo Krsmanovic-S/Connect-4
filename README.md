@@ -22,6 +22,8 @@
     IDE            ---> PyCharm
 --------------------------------
 
-![screenshot_1](https://user-images.githubusercontent.com/103185975/168714545-63d6178b-59c3-42ba-8836-d801c5e01bd5.PNG)
+![screenshot_4](https://user-images.githubusercontent.com/103185975/169909597-04c5dbb3-a049-46e2-921c-686d3091704d.PNG)
 
-![screenshot_2](https://user-images.githubusercontent.com/103185975/168714745-88a67d3a-f817-49a3-af44-ea8a605eae49.PNG)
+--------------------------------
+
+![screenshot_3](https://user-images.githubusercontent.com/103185975/169909605-63faf279-7f44-4afa-bf0a-750b264fcb11.PNG)
