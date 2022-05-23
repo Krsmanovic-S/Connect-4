@@ -2,6 +2,7 @@ from board import *
 from AI import AI
 from button import Button
 import webbrowser
+import sys
 
 
 class Game:
@@ -50,7 +51,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    quit()
+                    sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         # Transition into the game screen if the player clicks play.
@@ -73,7 +74,7 @@ class Game:
                             webbrowser.open(LINKEDIN_URL, new=0, autoraise=True)
                         elif self._exit_button.is_mouse_over(self.mouse_pos):
                             pygame.quit()
-                            quit()
+                            sys.exit()
 
             self._play_button.draw(self.window, self.mouse_pos)
             self._options_button.draw(self.window, self.mouse_pos)
@@ -94,7 +95,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    quit()
+                    sys.exit()
                 elif event.type == pygame.KEYDOWN:
                     # Transitioning from the options' menu to the main menu using ESC.
                     if event.key == pygame.K_ESCAPE:
@@ -142,7 +143,7 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                quit()
+                sys.exit()
             elif event.type == pygame.KEYDOWN:
                 # Transition back to the main menu and reset the board.
                 if event.key == pygame.K_ESCAPE:
