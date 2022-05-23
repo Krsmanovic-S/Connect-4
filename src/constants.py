@@ -5,11 +5,15 @@ pygame.init()
 WIDTH = 840
 HEIGHT = 720
 
+# GIT URL
+GIT_URL = "https://github.com/Krsmanovic-S/"
+
 # -------------------------------------------#
 #                   IMAGES                   #
 # -------------------------------------------#
 WINDOW_ICON = pygame.image.load('images/icons/window_logo.png')
 BG_IMAGE = pygame.image.load('images/icons/logo.png')
+GIT_ICON = pygame.image.load('images/icons/git_icon.png')
 
 PLAY_BUTTON = pygame.image.load('images/Buttons/play_button.png')
 OPTIONS_BUTTON = pygame.image.load('images/Buttons/options_button.png')

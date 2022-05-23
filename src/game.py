@@ -1,6 +1,7 @@
 from board import *
 from AI import AI
 from button import Button
+import webbrowser
 
 
 class Game:
@@ -20,6 +21,7 @@ class Game:
         self._play_button = Button(WIDTH // 2 - 200, 150, PLAY_BUTTON, HOVERED_PLAY)
         self._options_button = Button(WIDTH // 2 - 200, 350, OPTIONS_BUTTON, HOVERED_OPTIONS)
         self._exit_button = Button(WIDTH // 2 - 200, 550, EXIT_BUTTON, HOVERED_EXIT)
+        self._git_button = Button(30, 600, GIT_ICON, GIT_ICON)
 
         # Options Menu Buttons
         self._player_red = Button(WIDTH // 2 - 200, 150, PLAYER_COLOR_RED, HOVERED_COLOR_RED)
@@ -68,6 +70,9 @@ class Game:
                             self._in_options = True
                             self._in_menu = False
                             return
+                        # Open the git url if the icon is selected.
+                        elif self._git_button.is_mouse_over(self.mouse_pos):
+                            webbrowser.open(GIT_URL, new=0, autoraise=True)
                         elif self._exit_button.is_mouse_over(self.mouse_pos):
                             pygame.quit()
                             quit()
@@ -75,6 +80,7 @@ class Game:
             self._play_button.draw(self.window, self.mouse_pos)
             self._options_button.draw(self.window, self.mouse_pos)
             self._exit_button.draw(self.window, self.mouse_pos)
+            self._git_button.draw(self.window, self.mouse_pos)
 
             pygame.display.update()
 
