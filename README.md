@@ -20,12 +20,6 @@
     Python Version ---> 3.10.4
     
     IDE            ---> PyCharm
-    
- 
- When compiling, make sure that you frist run the following command wherever your cloned files are:
- 
- ```pip install -r requirements.txt``` ---> Will install all required packages for compilation
- 
 --------------------------------
 
 ![screenshot_4](https://user-images.githubusercontent.com/103185975/169909597-04c5dbb3-a049-46e2-921c-686d3091704d.PNG)
