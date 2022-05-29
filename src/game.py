@@ -1,6 +1,6 @@
 from board import *
 from AI import AI
-from button import Button
+from button_traits import *
 import webbrowser
 import sys
 
@@ -19,25 +19,25 @@ class Game:
         self.is_player_red = True
 
         # Main Menu Buttons
-        self._play_button = Button(WIDTH // 2 - 200, 175, PLAY_BUTTON, HOVERED_PLAY)
-        self._options_button = Button(WIDTH // 2 - 200, 400, OPTIONS_BUTTON, HOVERED_OPTIONS)
-        self._exit_button = Button(WIDTH // 2 - 200, 625, EXIT_BUTTON, HOVERED_EXIT)
+        self._play_button = Play()
+        self._options_button = Options()
+        self._exit_button = Exit()
 
         # Git/LinkedIn Buttons
-        self._git_button = Button(30, 700, GIT_ICON, HOVERED_GIT)
-        self._linkedin_button = Button(720, 700, LINKEDIN_ICON, HOVERED_LINKEDIN)
+        self._git_button = Git()
+        self._linkedin_button = LinkedIn()
 
         # Options Menu Buttons
-        self._player_red = Button(WIDTH // 2 - 200, 175, PLAYER_COLOR_RED, HOVERED_COLOR_RED)
-        self._player_yellow = Button(WIDTH // 2 - 200, 175, PLAYER_COLOR_YELLOW, HOVERED_COLOR_YELLOW)
-        self._pvp_disabled = Button(WIDTH // 2 - 200, 400, PVP_DISABLED, HOVERED_PVP_DISABLED)
-        self._pvp_enabled = Button(WIDTH // 2 - 200, 400, PVP_ENABLED, HOVERED_PVP_ENABLED)
+        self._player_red = PlayerRed()
+        self._player_yellow = PlayerYellow()
+        self._pvp_disabled = PvpEnabled()
+        self._pvp_enabled = PvpDisabled()
 
-        self._easy_difficulty = Button(WIDTH // 2 - 200, 625, EASY_DIFFICULTY, HOVERED_EASY_DIFFICULTY)
-        self._medium_difficulty = Button(WIDTH // 2 - 200, 625, MEDIUM_DIFFICULTY, HOVERED_MEDIUM_DIFFICULTY)
-        self._hard_difficulty = Button(WIDTH // 2 - 200, 625, HARD_DIFFICULTY, HOVERED_HARD_DIFFICULTY)
+        self._easy_difficulty = EasyDifficulty()
+        self._medium_difficulty = MediumDifficulty()
+        self._hard_difficulty = HardDifficulty()
 
-        self._back_arrow = Button(720, 700, BACK_ARROW, HOVERED_BACK_ARROW)
+        self._back_arrow = BackArrow()
 
     # Menu Functions
     def main_menu(self):
@@ -76,12 +76,12 @@ class Game:
                             pygame.quit()
                             sys.exit()
 
-            self._play_button.draw(self.window, self.mouse_pos)
-            self._options_button.draw(self.window, self.mouse_pos)
-            self._exit_button.draw(self.window, self.mouse_pos)
+            self._play_button.draw_button(self.window, self.mouse_pos)
+            self._options_button.draw_button(self.window, self.mouse_pos)
+            self._exit_button.draw_button(self.window, self.mouse_pos)
 
-            self._git_button.draw(self.window, self.mouse_pos)
-            self._linkedin_button.draw(self.window, self.mouse_pos)
+            self._git_button.draw_button(self.window, self.mouse_pos)
+            self._linkedin_button.draw_button(self.window, self.mouse_pos)
 
             pygame.display.update()
 
@@ -119,7 +119,7 @@ class Game:
                         elif self._back_arrow.is_mouse_over(self.mouse_pos):
                             self.main_menu()
 
-            self._back_arrow.draw(self.window, self.mouse_pos)
+            self._back_arrow.draw_button(self.window, self.mouse_pos)
 
             self._player_yellow.draw_changing_button(self.window, self.mouse_pos,
                                                      self._player_red, self.is_player_red)
@@ -128,11 +128,11 @@ class Game:
                                                     self._pvp_enabled, self.board.pvp)
 
             if self.computer.search_depth == 1:
-                self._easy_difficulty.draw(self.window, self.mouse_pos)
+                self._easy_difficulty.draw_button(self.window, self.mouse_pos)
             elif self.computer.search_depth == 2:
-                self._medium_difficulty.draw(self.window, self.mouse_pos)
+                self._medium_difficulty.draw_button(self.window, self.mouse_pos)
             else:
-                self._hard_difficulty.draw(self.window, self.mouse_pos)
+                self._hard_difficulty.draw_button(self.window, self.mouse_pos)
 
             pygame.display.update()
 
